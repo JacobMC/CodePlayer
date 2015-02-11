@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+    <title>CodePlayer</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+</head>
+
+<body>
+	<div id="wrapper">
+	
+	<div id="topbar">
+
+		<h1>CodePlayer</h1>
+		
+		<ul id="toggles">
+			<li class="toggle selected">HTML</li>
+			<li class="toggle">CSS</li>
+			<li class="toggle selected" style="border:none">Result</li>
+		</ul>
+		
+		<button id="run">Run</button>
+
+	</div>
+	
+	<div class="clear"></div> <!-- Breaks floats -->
+	
+	<div class="code" id="HTML">
+		<div class="codeLabel">HTML</div>
+		<textarea id="htmlCode">Insert HTML here.</textarea>
+	</div>
+	
+	<div class="code" id="CSS">
+		<div class="codeLabel">CSS</div>
+		<textarea id="cssCode">Insert CSS here.</textarea>
+	</div>
+	
+	
+	<div class="code" id="Result">
+		<div class="codeLabel">Result</div>
+		<iframe id="resultFrame "></iframe>
+	</div>
+	
+	
+	
+	
+	
+	</div> <!-- closes wrapper div -->
+	
+	<script>
+		
+		var windowHeight = $(window).height();
+		var topBarHeight = $("#topbar").height();
+		
+		var codeHeight = windowHeight - topBarHeight;
+		
+		$(".code").height(codeHeight+"px");
+		
+		$(".toggle").click(function() {
+			
+			$(this).toggleClass("selected");
+			
+			var activeDiv=$(this).html();
+			
+			$("#"+activeDiv).toggle();
+			
+			var showingDivs=$(".code").filter(function() {
+				
+				return($(this).css("display")!="none");
+				
+			}).length;
+			
+			var width=100/showingDivs;
+			
+			$(".code").width(width+"%");
+			
+		});
+		
+		
+		$("#run").click(function() {
+			
+$("iframe").contents().find("html").html('<style>'+$("#cssCode").val()+'</style>'+$("#htmlCode").val());
+			
+			
+		});
+		
+	</script>
+	
+</body>
+</html>
